@@ -16,7 +16,7 @@ class Produto:
     @property
     def quantidade_em_estoque(self):
         return self.__quantidade_em_estoque
-    
+    @quantidade_em_estoque.setter
     def quantidade_em_estoque(self,valor):
         if valor <= 0:
             print("valor invalido")
@@ -24,7 +24,7 @@ class Produto:
             self.quantidade_em_estoque = valor
             
     def vender(self,quantidade):
-        if 0 < self.__quantidade_em_estoque <= quantidade:
+        if 0 < self.__quantidade_em_estoque >= quantidade:
             self.__quantidade_em_estoque -= quantidade
         else:
             print("Não tem estoque suficiente")
@@ -36,3 +36,9 @@ class Produto:
         return self.__preco
     def get_quantidade_em_estoque(self):
         return self.__quantidade_em_estoque
+p1 = Produto("Celular",2500,2)
+print(f"Produto: {p1.get_nome()}, Preço: R${p1.get_preco():.2f}, Estoque: {p1.get_quantidade_em_estoque()}")
+p1.repor_estoque(5)
+p1.vender(3)
+print(f"Estoque atual: {p1.get_quantidade_em_estoque()}")
+p1.vender(15) # Tentativa de vender mais do que há em estoque

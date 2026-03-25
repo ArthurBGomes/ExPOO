@@ -14,7 +14,7 @@ class ContaBancaria:
             self.__saldo -= valor
         else:
             print("Saldo Inválido ou insuficiente")
-    def consultar_saldo(self,):
+    def consultar_saldo(self):
         return self.__saldo
 c1 = ContaBancaria("Arthur",)
 c1.depositar(500)

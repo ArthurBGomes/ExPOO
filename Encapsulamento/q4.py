@@ -22,7 +22,7 @@ class ContaBancaria:
         else:
             print("Saldo Inválido ou insuficiente")
     
-c1 = ContaBancaria("Arthur",)
+c1 = ContaBancaria("Arthur")
 c1.depositar(500)
 c1.sacar(200)
 print(f"Saldo atual: {c1.get_saldo}")

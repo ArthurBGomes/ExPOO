@@ -8,7 +8,7 @@ class Turma:
     def adicionar_aluno(self,aluno):
         self.alunos.append(aluno)
     def exibir_alunos(self):
-        print(f"os alunos da turma {self.nome}:")
+        print(f"os alunos da turma {self.nome } são:")
         for aluno in self.alunos:
             print(aluno.nome)
 class Escola:
@@ -20,16 +20,20 @@ class Escola:
         self.turmas.append(turma) 
         return turma
     def exibir_turmas(self):
+        print(f"{'='*30}")
         print(f"as turmas da Escola {self.nome} são:")
+        print(f"{'='*30}")
         for turma in self.turmas:
             print(turma.nome)
             turma.exibir_alunos()
+            print(f"{'='*30}")
 a1 = Aluno("Arthur")
 a2 = Aluno("Rafinha")
 a3 = Aluno("Giovanna")
 a4 = Aluno("George")
 e1 = Escola("IFRN")
 t1= e1.adicionar_turma("INFO2V")
+t2= e1.adicionar_turma("EBM2V")
 t1.adicionar_aluno(a1)
 t1.adicionar_aluno(a2)
 t1.adicionar_aluno(a3)

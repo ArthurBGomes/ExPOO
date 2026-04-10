@@ -17,7 +17,7 @@ class Animal:
         self.nome = nome
         self.dono = dono
     def __str__(self):
-        return f"Nome: {self.nome}\nDono: {self.dono.nome}"
+        return f"Nome: {self.nome}, Dono: {self.dono.nome}"
 cidade = Cidade("CM")
 pessoa = Pessoa("Arthur",cidade)
 cachorro = Animal("Zeca",pessoa)

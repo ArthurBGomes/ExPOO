@@ -5,13 +5,13 @@ class Comodo:
 class Casa:
     def __init__(self):
         self.comodos:list = []
-    def adicionar_comodo(self,comodo):
+    def adicionar_comodo(self,nome,tamanho):
+        comodo = Comodo(nome,tamanho)
         self.comodos.append(comodo)
     def listar_comodos(self):
         for comodo in self.comodos:
             print(f"{comodo.nome} com {comodo.tamanho} M²")
-c1 = Comodo("Quarto",20)
 casa = Casa()
-casa.adicionar_comodo(c1)
+casa.adicionar_comodo("Quarto",20)
 casa.listar_comodos()
 

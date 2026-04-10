@@ -17,21 +17,21 @@ class Escola:
         self.turmas = []
     def adicionar_turma(self,nome):
         turma = Turma(nome)
-        self.turmas.append(turma)
+        self.turmas.append(turma) 
+        return turma
     def exibir_turmas(self):
-        print(f"as turmas da Escola {self.nome}:")
+        print(f"as turmas da Escola {self.nome} são:")
         for turma in self.turmas:
             print(turma.nome)
+            turma.exibir_alunos()
 a1 = Aluno("Arthur")
 a2 = Aluno("Rafinha")
 a3 = Aluno("Giovanna")
 a4 = Aluno("George")
-t1 = Turma("INFO2V")
+e1 = Escola("IFRN")
+t1= e1.adicionar_turma("INFO2V")
 t1.adicionar_aluno(a1)
 t1.adicionar_aluno(a2)
 t1.adicionar_aluno(a3)
 t1.adicionar_aluno(a4)
-t1.exibir_alunos()
-e1 = Escola("IFRN")
-e1.adicionar_turma(t1.nome)
 e1.exibir_turmas()

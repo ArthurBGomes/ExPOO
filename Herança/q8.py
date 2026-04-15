@@ -17,9 +17,9 @@ class Carro:
     def __init__(self,modelo,potencia):
         self.modelo = modelo
         self.motor = Motor(potencia) # Nessa linha, criamos um objeto da classe motor,e a partir disso,conseguimos acessar todos os seus métodos
-    def liga_desliga(self):         # self →  o objeto Carro
-        self.motor.liga_desliga()   # self.motor    →  o objeto Motor que está dentro do Carro
-                                    # self.motor.liga_desliga()  →  chama o método liga_desliga() desse Motor
+    def liga_desliga(self):          # self →  o objeto Carro
+        self.motor.liga_desliga()    # self.motor    →  o objeto Motor que está dentro do Carro
+                                     # self.motor.liga_desliga()  →  chama o método liga_desliga() desse Motor
 
 class CarroEletrico(Carro):
     def __init__(self,modelo, potencia):

@@ -1,7 +1,7 @@
 class Animal:
     def fazer_som(self):
         print("Um Som Desconhecido")
-class Cachorro:
+class Cachorro(Animal):
     def fazer_som(self):
         print("Latido")
 a1 = Animal()

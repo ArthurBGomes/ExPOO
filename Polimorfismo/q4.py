@@ -1,17 +1,16 @@
-class Animal:
-    def emitir_som(self):
-        return "Um Som Desconhecido"
-class Cachorro(Animal):
-    def emitir_som(self):
-        return "Au Au"
-class Gato(Animal):
-    def emitir_som(self):
-        return "Miau Miau"
+class Veiculo:
+     def mover(self): 
+        return "Veículo se movendo"
+class Moto(Veiculo):
+     def mover(self): 
+        return "Cortando Giro"
+class Carro(Veiculo):
+     def mover(self): 
+        return "Catuca Railton"
+class Bicicleta(Veiculo):
+     def mover(self): 
+        return "Pedalando"
 
-animais =[Animal(),Cachorro(),Gato(),Animal(),Cachorro(),Gato()]
-print("=" *25)
-print("Zoológico dos Britos")
-print("=" *25)
-
-for animal in animais:
-    print(f"{animal.__class__.__name__}: {animal.emitir_som()}")
+veiculos = [Veiculo(),Moto(),Carro(),Bicicleta()]
+for veiculo in veiculos:
+    print(f"{veiculo.__class__.__name__}: {veiculo.mover()}")

@@ -1,22 +1,26 @@
-import string
-
 frase = input("Digite uma frase: ")
 
 frase = frase.lower()
-frase = frase.translate(str.maketrans('', '', string.punctuation))
+
+for p in ".,!?":
+    frase = frase.replace(p, "")
 
 palavras = frase.split()
 
-palavras_unicas = set(palavras)
+unicas = set(palavras)
 
 frequencia = {}
+
 for palavra in palavras:
-    frequencia[palavra] = frequencia.get(palavra, 0) + 1
+    if palavra in frequencia:
+        frequencia[palavra] += 1
+    else:
+        frequencia[palavra] = 1
 
-print("\nPalavras únicas (ordenadas alfabeticamente):")
-for palavra in sorted(palavras_unicas):
-    print(f"  {palavra}")
+print("\nPalavras únicas:")
+for palavra in sorted(unicas):
+    print(palavra)
 
-print("\nFrequência de cada palavra (ordenadas alfabeticamente):")
+print("\nFrequência das palavras:")
 for palavra in sorted(frequencia):
-    print(f"  {palavra}: {frequencia[palavra]}")
+    print(f"{palavra}: {frequencia[palavra]}")

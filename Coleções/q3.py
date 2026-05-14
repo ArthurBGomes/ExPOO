@@ -62,7 +62,7 @@ def main():
             if nome and telefone:
                 adicionar_contato(agenda, nome, telefone)
             else:
-                print("  ⚠ Nome e telefone não podem ser vazios.")
+                print("  Nome e telefone não podem ser vazios.")
 
         elif opcao == "2":
             nome = input("  Nome a buscar: ").strip()
@@ -83,5 +83,4 @@ def main():
             print(" Opção inválida. Escolha entre 1 e 5.")
 
 
-if __name__ == "__main__":
-    main()
+main()

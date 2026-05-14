@@ -1,12 +1,12 @@
 contagem = {}
 while True:
-    entrada = input("Diga o ano:").strip()
+    entrada = input("Diga o ano de nascimento:")
     if entrada == "":
         break
     ano = int(entrada)
     contagem[ano] = contagem.get(ano, 0) + 1
 print("\n" + "=" * 40)
-print(f"{'RELATÓRIO DE NASCIMENTOS':^40}")
+print(f"{'Censo dos Anos':^40}")
 print("=" * 40)
  
 if not contagem:

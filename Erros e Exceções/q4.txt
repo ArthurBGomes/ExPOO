@@ -1,0 +1,5 @@
+try — envolve o código que pode falhar. É o bloco "tentativa". O Python tenta executar tudo que está aqui e, se uma exceção ocorrer, para imediatamente e vai para o except.
+except — executado quando uma exceção acontece no try. É onde você trata o erro — exibe uma mensagem, registra no log, toma uma ação alternativa.invés da mensagem de erro,mostra uma mensagem personalizada pelo programador
+else — executado somente se nenhuma exceção ocorreu no try. Serve para o código que só faz sentido rodar quando tudo deu certo.
+finally — executado sempre, com ou sem exceção. Ideal para fechar arquivos, encerrar conexões e liberar recursos.
+Porque ele captura qualquer coisa, inclusive erros que você não deveria silenciar:Os problemas principais são três. Primeiro, esconde bugs — você suprime erros que deveriam ser corrigidos no código, dificultando a depuração. Segundo, captura erros do sistema — como KeyboardInterrupt (Ctrl+C) e SystemExit, impedindo o programa de encerrar corretamente. Terceiro, perde informação — sem saber o tipo do erro, fica impossível tomar a ação certa para cada situação.

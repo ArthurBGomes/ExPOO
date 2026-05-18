@@ -1,0 +1,2 @@
+Erro de Lógica é quando o código roda sem travar, mas produz um resultado errado. O Python não consegue detectar sozinho porque sintaticamente o código está correto — o erro está no raciocínio do programador.
+Erro de Execução (Exceção) é quando algo inesperado acontece durante a execução e o Python interrompe o programa imediatamente. Esse o Python consegue detectar e você pode capturar com try/except.

@@ -1,0 +1,2 @@
+Será Lançada a Exceção de IndexError e será impresso no console a seguinte mensagem:
+Erro: Índice inexistente.

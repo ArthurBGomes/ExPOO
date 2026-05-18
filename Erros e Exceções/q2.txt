@@ -1,0 +1,5 @@
+Exceções são como se fossem alarmes no python que são disparados quando acontece algum tipo de erro,seja ele do mais genérico ao mais específico.
+Elas são importantes já que elas nos ajudam a identificam falhas no nosso código que muitos vezes não são erros sintáticos(Escrita de código) e sim erros de execução e exceções servem justamente pra isso,identificar esses e ajudar o usuário a ter uma melhor experiência
+Exemplo: Um sistema trava e fecha do nada,sem o Tratamento,o usuário receberia um monte de mensagens e ficaria desnorteado,com Exceções isso não aconteceria
+e também auxiliam o usuário quando ocorre um erro,guiando por meio de mensagens e etc,Dessa forma,Melhorando a interatividade com o usuário.
+Além disso, sem tratamento, operações como salvar em banco de dados ou escrever em arquivos podem ficar incompletas, corrompendo os dados.

@@ -1,5 +1,6 @@
 from abc import ABC,abstractmethod
 class DocumentoSaude(ABC):
+    @abstractmethod
     def gerar_relatorio(self):
         pass
 class Pessoa:
@@ -28,7 +29,7 @@ class MedicoEspecialista(Medico):
                 f"Endereço: {self.endereco} | "
                 f"Especialidade: {self.especialidade} | "
                 f"CRM: {self.crm} | "
-                f"Registro Especialidade: {self.especialidade} | "
+                f"Registro Especialidade: {self.registro_especialiade} | "
             ) 
 class Paciente(Pessoa):
     def __init__(self,nome,endereco,cpf,contato,data_nascimento):

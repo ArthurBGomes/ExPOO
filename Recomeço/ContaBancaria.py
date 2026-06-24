@@ -1,7 +1,7 @@
 class ContaBancaria:
     numeros_contas = []
     contas_duplicada = []
-    def __init__(self,titular,numero,saldo):
+    def __init__(self,cliente,numero,saldo):
         self.__cliente = cliente 
         self.__numero =  numero
         self.__saldo = saldo
@@ -18,7 +18,7 @@ class ContaBancaria:
             else:
                 vistos.add(numero)
         return cls.contas_duplicada
-    def get_titular(self):
+    def get_cliente(self):
         return self.__cliente
     
     def get_numero(self):
@@ -45,4 +45,4 @@ class ContaBancaria:
 
 
     def exibir_dados(self):
-        return f"{self.__cliente}, Conta {self.__numero}, possui {self.__saldo:.2f} Reais disponíveis na conta"
+        return f"{self.get_cliente()}, Conta {self.get_numero()}, possui {self.get_saldo():.2f} Reais disponíveis na conta"

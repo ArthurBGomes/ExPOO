@@ -11,7 +11,9 @@ class Cliente:
     def get_endereco(self):
         return self.__endereco
     def exibir_dados(self):
-        return f"{self.__nome},{self.__cpf},{self.__endereco.exibir_dados()}"
+        return (f"{self.__nome}\n"
+                f"CPF: {self.__cpf}\n"
+                f"{self.__endereco.exibir_dados()}")
     def adicionar_conta(self,conta):
         self.__contas.append(conta)
 

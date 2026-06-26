@@ -45,4 +45,4 @@ class ContaBancaria:
 
 
     def exibir_dados(self):
-        return f"{self.get_cliente()}, Conta {self.get_numero()}, possui {self.get_saldo():.2f} Reais disponíveis na conta"
+        return f"{self.__cliente.exibir_dados()}, Conta {self.get_numero()}, possui {self.get_saldo():.2f} Reais disponíveis na conta"

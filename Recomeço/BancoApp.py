@@ -2,8 +2,10 @@ import tkinter as tk
 from tkinter import messagebox, simpledialog
 from ContaBancaria import ContaBancaria
 from cliente import Cliente
+from endereco import Endereco
 
-cliente1 = Cliente("Arthur","10000000","Rua dos Lençois",196,"Cohab","CM")
+e1 = Endereco("Rua dos Lençois",196,"Cohab","CM")
+cliente1 = Cliente("Arthur","10000000",e1)
 cliente1.adicionar_conta("1001")
 
 class BancoApp:
@@ -13,10 +15,7 @@ class BancoApp:
         self.janela.geometry("850x400")
 
         self.contas = [
-            # ContaBancaria("João", 1001, 500),
-            # ContaBancaria("Maria", 1002, 1000),
-            # ContaBancaria("Pedro", 1003, 300),
-            ContaBancaria(cliente1.get_nome(), 1004, 20),
+            ContaBancaria(cliente1, 1004, 20)
         ]
         if(self.contas[0].existe_conta_duplicada()):
             messagebox.showerror("Erro","Existe Conta Duplicada")
@@ -53,7 +52,7 @@ class BancoApp:
 
             lbl_titular = tk.Label(
                 frame,
-                text=conta.get_cliente(),
+                text=conta.get_cliente().get_nome(),
                 font=("Arial", 14, "bold")
             )
             lbl_titular.pack()

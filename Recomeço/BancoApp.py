@@ -4,10 +4,9 @@ from ContaBancaria import ContaBancaria
 from cliente import Cliente
 from endereco import Endereco
 
-e1 = Endereco("Rua 1",196,"Bairro 2","CM")
-e2 = Endereco("Rua 2",123,"Bairro 2","CM")
-cliente1 = Cliente("Arthur","10000000",e1)
-c2 = Cliente("George","1000000001",e2)
+
+cliente1 = Cliente("Arthur","123.456.789","Rua 1",196,"Bairro 2","Cidade 1")
+cliente2 = Cliente("George","987.654.321","Rua 2",123,"Bairro 2","Cidade 1")
 
 
 class BancoApp:
@@ -18,7 +17,7 @@ class BancoApp:
 
         self.contas = [
             ContaBancaria(cliente1, 1004, 200),
-            ContaBancaria(c2, 1003, 20)
+            ContaBancaria(cliente2, 1003, 20)
         ]
         if(self.contas[0].existe_conta_duplicada()):
             messagebox.showerror("Erro","Existe Conta Duplicada")

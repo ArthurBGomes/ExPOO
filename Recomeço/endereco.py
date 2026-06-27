@@ -19,5 +19,3 @@ class Endereco:
                 f"Bairro: {self.__bairro}\n"
                 f"Cidade: {self.__cidade}"             
     )
-# e1 = Endereco("Rua dos Lençois",196,"Cohab","CM")
-# print(e1.exibir_dados())

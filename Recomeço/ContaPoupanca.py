@@ -9,4 +9,4 @@ class ContaPoupanca(ContaBancaria):
     def render_juros(self):
         pass
     def exibir_dados(self):
-        pass
+        f"{super().exibir_dados()}"

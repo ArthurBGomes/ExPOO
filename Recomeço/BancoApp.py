@@ -3,6 +3,8 @@ from tkinter import messagebox, simpledialog
 from ContaBancaria import ContaBancaria
 from cliente import Cliente
 from endereco import Endereco
+from ContaPoupanca import ContaPoupanca
+from ContaCorrente import ContaCorrente
 
 
 cliente1 = Cliente("Arthur","123.456.789","Rua 1",196,"Bairro 2","Cidade 1")
@@ -16,7 +18,7 @@ class BancoApp:
         self.janela.geometry("850x400")
 
         self.contas = [
-            ContaBancaria(cliente1, 1004, 200),
+            ContaCorrente(cliente1, 1004, 200,1000,100),
             ContaBancaria(cliente2, 1003, 20)
         ]
         if(self.contas[0].existe_conta_duplicada()):
@@ -78,7 +80,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.depositar(c)
             )
-            # btn_depositar.config(state="disabled")
+            # btn_depositar.config(state="active")
             btn_depositar.pack(pady=2)
 
             btn_sacar = tk.Button(
@@ -87,7 +89,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.sacar(c)
             )
-            # btn_sacar.config(state="disabled")
+            # btn_sacar.config(state="active")
             btn_sacar.pack(pady=2)
 
             btn_transferir = tk.Button(
@@ -96,7 +98,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.transferir(c)
             )
-            # btn_transferir.config(state="disabled")
+            # btn_transferir.config(state="active")
             btn_transferir.pack(pady=2)
 
             btn_dados = tk.Button(
@@ -105,7 +107,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.exibir_dados(c)
             )
-            # btn_dados.config(state="disabled")
+            # btn_dados.config(state="active")
             btn_dados.pack(pady=2)
 
             btn_rendimento = tk.Button(
@@ -114,7 +116,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.render_juros(c)
             )
-            btn_rendimento.config(state="disabled")
+            btn_rendimento.config(state="active")
             btn_rendimento.pack(pady=2)
 
             btn_taxa = tk.Button(
@@ -123,7 +125,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.cobrar_taxa(c)
             )
-            btn_taxa.config(state="disabled")
+            btn_taxa.config(state="active")
             btn_taxa.pack(pady=2)
 
     def depositar(self, conta):
@@ -177,7 +179,7 @@ class BancoApp:
         if conta_origem.transferir(valor, conta_destino):
             messagebox.showinfo("Sucesso", "Transferência realizada.")
         else:
-            messagebox.showerror("Erro", "Saldo insuficiente ou valor inválido.")
+            messagebox.showerror("Erro", "Saldo/Limite insuficiente ou valor inválido.")
 
         self.atualizar_tela()
 
@@ -197,6 +199,7 @@ class BancoApp:
             messagebox.showerror("Sucesso", "Rendimento efetuado.")
         else:
             messagebox.showerror("Erro", "Cobrança invalida para essa conta")
+        self.atualizar_tela()
 janela = tk.Tk()
 app = BancoApp(janela)
 janela.mainloop()

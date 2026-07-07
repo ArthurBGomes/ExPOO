@@ -19,7 +19,7 @@ class BancoApp:
 
         self.contas = [
             ContaCorrente(cliente1, 1004, 200,1000,100),
-            ContaBancaria(cliente2, 1003, 20)
+            ContaPoupanca(cliente2, 1003, 20,0.1)
         ]
         if(self.contas[0].existe_conta_duplicada()):
             messagebox.showerror("Erro","Existe Conta Duplicada")
@@ -146,7 +146,7 @@ class BancoApp:
             if conta.sacar(valor):
                 messagebox.showinfo("Sucesso", "Saque realizado.")
             else:
-                messagebox.showerror("Erro", "Saldo insuficiente ou valor inválido.")
+                messagebox.showerror("Erro", "Saldo/Limite insuficiente ou valor inválido.")
 
         self.atualizar_tela()
 
@@ -189,14 +189,15 @@ class BancoApp:
     def render_juros(self, conta):
         if(conta.get_tipo_conta() == "Conta Poupança"):
             conta.render_juros()
-            messagebox.showerror("Sucesso", "Rendimento efetuado.")
+            messagebox.showwarning("Sucesso", "Rendimento efetuado.")
         else:
             messagebox.showerror("Erro", "Conta não disponibiliza rendimento")
+        self.atualizar_tela()
     
     def cobrar_taxa(self, conta):
         if(conta.get_tipo_conta() == "Conta Corrente"):
             conta.cobrar_taxa()
-            messagebox.showerror("Sucesso", "Rendimento efetuado.")
+            messagebox.showwarning("Sucesso", "Rendimento efetuado.")
         else:
             messagebox.showerror("Erro", "Cobrança invalida para essa conta")
         self.atualizar_tela()

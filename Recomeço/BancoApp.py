@@ -26,7 +26,7 @@ class BancoApp:
             messagebox.showinfo("Contas",self.contas[0].contas_duplicadas())
             exit()
         self.criar_interface()
-
+    
     def criar_interface(self):
         titulo = tk.Label(
             self.janela,
@@ -34,7 +34,14 @@ class BancoApp:
             font=("Arial", 18, "bold")
         )
         titulo.pack(pady=15)
-
+        btn_criar_conta = tk.Button(
+            self.janela,
+            text="Criar Conta",
+            width=15,
+            command=lambda :self.criar_conta()
+                )
+                # btn_sacar.config(state="active")
+        btn_criar_conta.pack(pady=2)
         self.frame_contas = tk.Frame(self.janela)
         self.frame_contas.pack()
 
@@ -53,6 +60,7 @@ class BancoApp:
                 pady=10
             )
             frame.pack(side="left", padx=10, pady=10)
+           
 
             lbl_titular = tk.Label(
                 frame,
@@ -74,6 +82,12 @@ class BancoApp:
             )
             lbl_saldo.pack(pady=5)
 
+            lbl_tipo_conta = tk.Label(
+                frame,
+                text=f"{conta.get_tipo_conta()}",
+                font=("Arial", 12)
+            )
+            lbl_tipo_conta.pack(pady=5)
             btn_depositar = tk.Button(
                 frame,
                 text="Depositar",
@@ -201,6 +215,85 @@ class BancoApp:
         else:
             messagebox.showerror("Erro", "Cobrança invalida para essa conta")
         self.atualizar_tela()
+    def criar_conta(self):
+        janela_cadastro = tk.Toplevel(self.janela)
+        janela_cadastro.title("Criar nova conta")
+        janela_cadastro.geometry("400x400")
+        janela_cadastro.resizable(False, False)
+
+        tk.Label(janela_cadastro, text="Titular:").pack(pady=5)
+        entrada_titular = tk.Entry(janela_cadastro)
+        entrada_titular.pack()
+
+        tk.Label(janela_cadastro, text="CPF:").pack(pady=5)
+        entrada_cpf = tk.Entry(janela_cadastro)
+        entrada_cpf.pack()
+        tk.Label(janela_cadastro, text="Tipo de Conta:").pack(pady=5)
+        entrada_tipoconta = tk.Entry(janela_cadastro)
+        entrada_tipoconta.pack()
+        tk.Label(janela_cadastro, text="Número da conta:").pack(pady=5)
+        entrada_numero = tk.Entry(janela_cadastro)
+        entrada_numero.pack()
+
+        tk.Label(janela_cadastro, text="Saldo inicial:").pack(pady=5)
+        entrada_saldo = tk.Entry(janela_cadastro)
+        entrada_saldo.pack()
+        tk.Label(janela_cadastro, text="Rua:").pack(pady=5)
+        entrada_rua = tk.Entry(janela_cadastro)
+        entrada_rua.pack()
+
+        tk.Label(janela_cadastro, text="Número:").pack(pady=5)
+        entrada_numerocasa= tk.Entry(janela_cadastro)
+        entrada_numerocasa.pack()
+        tk.Label(janela_cadastro, text="Bairro:").pack(pady=5)
+        entrada_bairro = tk.Entry(janela_cadastro)
+        entrada_bairro.pack()
+
+        tk.Label(janela_cadastro, text="Cidade:").pack(pady=5)
+        entrada_cidade = tk.Entry(janela_cadastro)
+        entrada_cidade.pack()
+
+
+        
+
+        def salvar_conta():
+            titular = entrada_titular.get()
+            cpf = entrada_cpf.get()
+            rua  = entrada_rua.get()
+            numerocasa = entrada_numerocasa.get()
+            bairro = entrada_bairro.get()
+            cidade = entrada_cidade.get()
+            saldo = entrada_saldo.get()
+            numero = entrada_numero.get()
+            tipo = entrada_tipoconta.get()
+
+            if titular == "" or cpf == "" or numero == "" or saldo == "" or  rua == "" or bairro == "" or cidade == "" or numerocasa == "" or tipo =="" :
+                messagebox.showerror("Erro", "Preencha todos os campos.")
+                return
+
+            try:
+                numero = int(numero)
+                saldo = float(saldo)
+            except ValueError:
+                messagebox.showerror("Erro", "Número da conta e saldo devem ser valores numéricos.")
+                return
+            cliente = Cliente(titular,cpf,rua,numerocasa,bairro,cidade)
+            if tipo == "Bancária":
+                nova_conta = ContaBancaria(cliente, numero, saldo)
+            self.contas.append(nova_conta)
+
+            messagebox.showinfo("Sucesso", "Conta criada com sucesso.")
+
+            janela_cadastro.destroy()
+            self.atualizar_tela()
+
+        btn_salvar = tk.Button(
+            janela_cadastro,
+            text="Salvar conta",
+            width=15,
+            command=salvar_conta
+        )
+        btn_salvar.pack(pady=15)
 janela = tk.Tk()
 app = BancoApp(janela)
 janela.mainloop()

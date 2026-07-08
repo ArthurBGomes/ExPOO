@@ -7,5 +7,6 @@ class ContaSalario(ContaBancaria):
         self.__saques_realizados = saques_realizados
         self.__limite_saques = limite_saques
 
+
     def get_tipo_conta(self):
         return "Conta Salário"

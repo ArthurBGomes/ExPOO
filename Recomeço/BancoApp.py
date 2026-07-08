@@ -7,8 +7,9 @@ from ContaPoupanca import ContaPoupanca
 from ContaCorrente import ContaCorrente
 
 
+cliente2 = Cliente("Giovanna","984.654.321","Rua 2",123,"Bairro 2","Cidade 1")
 cliente1 = Cliente("Arthur","123.456.789","Rua 1",196,"Bairro 2","Cidade 1")
-cliente2 = Cliente("George","987.654.321","Rua 2",123,"Bairro 2","Cidade 1")
+cliente3 = Cliente("George","987.654.321","Rua 2",123,"Bairro 2","Cidade 1")
 
 
 class BancoApp:
@@ -19,7 +20,8 @@ class BancoApp:
 
         self.contas = [
             ContaCorrente(cliente1, 1004, 200,1000,100),
-            ContaPoupanca(cliente2, 1003, 20,0.1)
+            ContaPoupanca(cliente2, 1003, 20,0.1),
+            ContaPoupanca(cliente3, 1006, 20,0.1)
         ]
         if(self.contas[0].existe_conta_duplicada()):
             messagebox.showerror("Erro","Existe Conta Duplicada")
@@ -218,8 +220,8 @@ class BancoApp:
     def criar_conta(self):
         janela_cadastro = tk.Toplevel(self.janela)
         janela_cadastro.title("Criar nova conta")
-        janela_cadastro.geometry("400x400")
-        janela_cadastro.resizable(False, False)
+        janela_cadastro.geometry("600x600")
+        janela_cadastro.resizable(True, True)
 
         tk.Label(janela_cadastro, text="Titular:").pack(pady=5)
         entrada_titular = tk.Entry(janela_cadastro)
@@ -280,7 +282,17 @@ class BancoApp:
             cliente = Cliente(titular,cpf,rua,numerocasa,bairro,cidade)
             if tipo == "Bancária":
                 nova_conta = ContaBancaria(cliente, numero, saldo)
-            self.contas.append(nova_conta)
+                self.contas.append(nova_conta)
+            if tipo == "Corrente":
+                nova_conta = ContaBancaria(cliente, numero, saldo)
+                self.contas.append(nova_conta)
+            if tipo == "Poupança":
+                nova_conta = ContaBancaria(cliente, numero, saldo)
+                self.contas.append(nova_conta)
+            if tipo == "Salario":
+                nova_conta = ContaBancaria(cliente, numero, saldo)
+                self.contas.append(nova_conta)
+            
 
             messagebox.showinfo("Sucesso", "Conta criada com sucesso.")
 

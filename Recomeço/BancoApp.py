@@ -5,6 +5,7 @@ from cliente import Cliente
 from endereco import Endereco
 from ContaPoupanca import ContaPoupanca
 from ContaCorrente import ContaCorrente
+from ContaSalario import ContaSalario
 
 
 cliente2 = Cliente("Giovanna","984.654.321","Rua 2",123,"Bairro 2","Cidade 1")
@@ -16,12 +17,12 @@ class BancoApp:
     def __init__(self, janela):
         self.janela = janela
         self.janela.title("Sistema Bancário - POO em Python")
-        self.janela.geometry("850x400")
+        self.janela.geometry("950x500")
 
         self.contas = [
             ContaCorrente(cliente1, 1004, 200,1000,100),
             ContaPoupanca(cliente2, 1003, 20,0.1),
-            ContaPoupanca(cliente3, 1006, 20,0.1)
+            ContaSalario(cliente3, 1006, 2000,"SENAI",0,5)
         ]
         if(self.contas[0].existe_conta_duplicada()):
             messagebox.showerror("Erro","Existe Conta Duplicada")
@@ -143,6 +144,14 @@ class BancoApp:
             )
             btn_taxa.config(state="active")
             btn_taxa.pack(pady=2)
+            btn_salario = tk.Button(
+                frame,
+                text="Receber Salário",
+                width=15,
+                command=lambda c=conta: self.receber_salario(c)
+            )
+            btn_salario.config(state="active")
+            btn_salario.pack(pady=2)
 
     def depositar(self, conta):
         valor = simpledialog.askfloat("Depósito", "Digite o valor do depósito:")
@@ -213,10 +222,22 @@ class BancoApp:
     def cobrar_taxa(self, conta):
         if(conta.get_tipo_conta() == "Conta Corrente"):
             conta.cobrar_taxa()
-            messagebox.showwarning("Sucesso", "Rendimento efetuado.")
+            messagebox.showwarning("Sucesso", "Cobrança efetuada.")
         else:
             messagebox.showerror("Erro", "Cobrança invalida para essa conta")
         self.atualizar_tela()
+
+    def receber_salario(self, conta):
+        if(conta.get_tipo_conta() == "Conta Salário"):
+            valor = simpledialog.askfloat("Salário", "Digite o valor do salário:")
+
+            if valor is not None:
+                conta.receber_salario(valor)
+            messagebox.showwarning("Sucesso", " Salário efetuado.")
+        else:
+            messagebox.showerror("Erro", "Conta não recebe Salário")
+        self.atualizar_tela()
+
     def criar_conta(self):
         janela_cadastro = tk.Toplevel(self.janela)
         janela_cadastro.title("Criar nova conta")

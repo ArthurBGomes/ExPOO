@@ -4,6 +4,8 @@ class ContaPoupanca(ContaBancaria):
     def __init__(self, cliente, numero, saldo,taxa_rendimento):
         super().__init__(cliente, numero, saldo)
         self.__taxa_rendimento = taxa_rendimento
+    def sacar(self, valor):
+        return False
     def get_tipo_conta(self):
         return 'Conta Poupança'
     def render_juros(self):

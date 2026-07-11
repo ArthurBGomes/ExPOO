@@ -11,11 +11,12 @@ class ContaSalario(ContaBancaria):
         super().depositar(valor)
 
     def sacar(self, valor):
-        self.__saques_realizados += 1
-        if (self.__saques_realizados > self.__limite_saques) :
+        if self.__saques_realizados >= self.__limite_saques:
             return 'Limite de saques atingido!'
-        else:
-            return super().sacar(valor)
+        saque = super().sacar(valor)
+        if saque:
+            self.__saques_realizados += 1
+        return saque
     
     def depositar(self, valor):
         return False
@@ -24,7 +25,7 @@ class ContaSalario(ContaBancaria):
         return False
     
     def exibir_dados(self):
-        return f"{super().exibir_dados()}\nEmpresa:{self.__empresa}\nLimite de Saque:{self.__limite_saques}"
+        return f"{super().exibir_dados()}\nEmpresa:{self.__empresa}\n Saques Realizados:{self.__saques_realizados}\nLimite de Saque:{self.__limite_saques}"
     
     def get_tipo_conta(self):
         return "Conta Salário"

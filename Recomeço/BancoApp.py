@@ -22,7 +22,7 @@ class BancoApp:
         self.contas = [
             ContaCorrente(cliente1, 1004, 200,1000,100),
             ContaPoupanca(cliente2, 1003, 20,0.1),
-            ContaSalario(cliente3, 1006, 2000,"SENAI",0,5)
+            ContaSalario(cliente3, 1006, 2000,"SENAI",0,2)
         ]
         if(self.contas[0].existe_conta_duplicada()):
             messagebox.showerror("Erro","Existe Conta Duplicada")
@@ -170,8 +170,9 @@ class BancoApp:
         if valor is not None:
             if conta.sacar(valor):
                 messagebox.showinfo("Sucesso", "Saque realizado.")
+                
             else:
-                messagebox.showerror("Erro", "Saldo/Limite insuficiente ou valor inválido.")
+                messagebox.showerror("Erro", "=== Opções de Falha ===\n1- Valor Inválido\n2- Saldo/Limite Insuficiente\n3- Conta não disponibiliza saque\n4- Limite de Saques Atingido")
 
         self.atualizar_tela()
 

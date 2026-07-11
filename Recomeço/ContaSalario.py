@@ -12,7 +12,7 @@ class ContaSalario(ContaBancaria):
 
     def sacar(self, valor):
         if self.__saques_realizados >= self.__limite_saques:
-            return 'Limite de saques atingido!'
+            return False
         saque = super().sacar(valor)
         if saque:
             self.__saques_realizados += 1

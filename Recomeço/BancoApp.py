@@ -22,6 +22,7 @@ class BancoApp:
         self.contas = [
             ContaCorrente(cliente1, 1004, 200,1000,100),
             ContaPoupanca(cliente2, 1003, 20,0.1),
+            ContaBancaria(cliente2, 1005, 20),
             ContaSalario(cliente3, 1006, 2000,"SENAI",0,2)
         ]
         if(self.contas[0].existe_conta_duplicada()):
@@ -95,7 +96,7 @@ class BancoApp:
                 frame,
                 text="Depositar",
                 width=15,
-                command=lambda c=conta: self.depositar(c)
+                command=lambda conta=conta: self.depositar(conta)
             )
             # btn_depositar.config(state="active")
             btn_depositar.pack(pady=2)
@@ -104,7 +105,7 @@ class BancoApp:
                 frame,
                 text="Sacar",
                 width=15,
-                command=lambda c=conta: self.sacar(c)
+                command=lambda conta=conta: self.sacar(conta)
             )
             # btn_sacar.config(state="active")
             btn_sacar.pack(pady=2)
@@ -113,7 +114,7 @@ class BancoApp:
                 frame,
                 text="Transferir",
                 width=15,
-                command=lambda c=conta: self.transferir(c)
+                command=lambda conta=conta: self.transferir(conta)
             )
             # btn_transferir.config(state="active")
             btn_transferir.pack(pady=2)
@@ -122,7 +123,7 @@ class BancoApp:
                 frame,
                 text="Exibir Dados",
                 width=15,
-                command=lambda c=conta: self.exibir_dados(c)
+                command=lambda conta=conta: self.exibir_dados(conta)
             )
             # btn_dados.config(state="active")
             btn_dados.pack(pady=2)
@@ -131,27 +132,43 @@ class BancoApp:
                 frame,
                 text="Render Juros",
                 width=15,
-                command=lambda c=conta: self.render_juros(c)
+                command=lambda conta=conta: self.render_juros(conta)
             )
-            btn_rendimento.config(state="active")
+            if conta.get_tipo_conta() == "Conta Poupança":
+                btn_rendimento.config(state="active")
+            else:
+                btn_rendimento.config(state="disabled")
             btn_rendimento.pack(pady=2)
 
             btn_taxa = tk.Button(
                 frame,
                 text="Cobrar Taxa",
                 width=15,
-                command=lambda c=conta: self.cobrar_taxa(c)
+                command=lambda conta=conta: self.cobrar_taxa(conta)
             )
-            btn_taxa.config(state="active")
+            if conta.get_tipo_conta() == "Conta Corrente":
+                btn_taxa.config(state="active")
+            else:
+                btn_taxa.config(state="disabled")
             btn_taxa.pack(pady=2)
             btn_salario = tk.Button(
                 frame,
                 text="Receber Salário",
                 width=15,
-                command=lambda c=conta: self.receber_salario(c)
+                command=lambda conta=conta: self.receber_salario(conta)
             )
-            btn_salario.config(state="active")
+            if conta.get_tipo_conta() == "Conta Salário":
+                btn_salario.config(state="active")
+            else:
+                btn_salario.config(state="disabled")
             btn_salario.pack(pady=2)
+            btn_contas = tk.Button(
+                frame,
+                text="Contas do Cliente",
+                width=15,
+                command=lambda conta=conta: self.contas_cliente(conta)
+            )
+            btn_contas.pack(pady=2)
 
     def depositar(self, conta):
         valor = simpledialog.askfloat("Depósito", "Digite o valor do depósito:")
@@ -238,6 +255,20 @@ class BancoApp:
         else:
             messagebox.showerror("Erro", "Conta não recebe Salário")
         self.atualizar_tela()
+    def contas_cliente(self, conta):
+        cliente = conta.get_cliente()
+
+        texto = ""
+
+        for conta in self.contas:
+            if conta.get_cliente().get_cpf() == cliente.get_cpf():
+                texto += (
+                    f"{conta.get_tipo_conta()} - "
+                    f"Conta {conta.get_numero()} - "
+                    f"Saldo: R${conta.get_saldo():.2f}\n"
+                )
+
+        messagebox.showinfo("Contas do Cliente", texto)
 
     def criar_conta(self):
         janela_cadastro = tk.Toplevel(self.janela)

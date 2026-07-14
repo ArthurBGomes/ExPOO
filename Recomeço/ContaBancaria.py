@@ -27,7 +27,8 @@ class ContaBancaria:
     def get_saldo(self):
         return self.__saldo
     
-    
+    def get_tipo_conta(self):
+        return "Conta Bancária"
     def depositar(self,valor):
         self.__saldo += valor
         return True

@@ -273,8 +273,8 @@ class BancoApp:
     def criar_conta(self):
         janela_cadastro = tk.Toplevel(self.janela)
         janela_cadastro.title("Criar nova conta")
-        janela_cadastro.geometry("600x600")
-        janela_cadastro.resizable(True, True)
+        janela_cadastro.geometry("800x800")
+        janela_cadastro.resizable(False,False)
 
         tk.Label(janela_cadastro, text="Titular:").pack(pady=5)
         entrada_titular = tk.Entry(janela_cadastro)
@@ -307,20 +307,51 @@ class BancoApp:
         tk.Label(janela_cadastro, text="Cidade:").pack(pady=5)
         entrada_cidade = tk.Entry(janela_cadastro)
         entrada_cidade.pack()
+        tk.Label(janela_cadastro, text="Empresa:").pack(pady=5)
+        entrada_empresa = tk.Entry(janela_cadastro)
+        entrada_empresa.pack()
+        tk.Label(janela_cadastro, text="Taxa Rendimento:").pack(pady=5)
+        entrada_taxa = tk.Entry(janela_cadastro)
+        entrada_taxa.pack()
+        tk.Label(janela_cadastro, text="Limite de Saques:").pack(pady=5)
+        entrada_limite_saques = tk.Entry(janela_cadastro)
+        entrada_limite_saques.pack()
+        tk.Label(janela_cadastro, text="Saques Realizados:").pack(pady=5)
+        entrada_saques_realizados = tk.Entry(janela_cadastro)
+        entrada_saques_realizados.pack()
+        tk.Label(janela_cadastro, text="Cobrança da Tarifa:").pack(pady=5)
+        entrada_tarifa = tk.Entry(janela_cadastro)
+        entrada_tarifa.pack()
 
 
         
 
         def salvar_conta():
-            titular = entrada_titular.get()
-            cpf = entrada_cpf.get()
-            rua  = entrada_rua.get()
-            numerocasa = entrada_numerocasa.get()
-            bairro = entrada_bairro.get()
-            cidade = entrada_cidade.get()
-            saldo = entrada_saldo.get()
-            numero = entrada_numero.get()
-            tipo = entrada_tipoconta.get()
+            titular = "Lennedy"
+            cpf = "123-654-321-21"
+            rua  = "Rua 4"
+            numerocasa = 192
+            bairro = "Bairro 7"
+            cidade = "Cidade 2"
+            saldo = 2000
+            numero = 1008
+            tipo = "Poupança"
+            limite = 1000
+            tarifa_mensal = 50
+            empresa = "IFRN"
+            saques_realizados = 0
+            limite_saques = 3
+            taxa_rendimento = 0.1
+
+            # titular = entrada_titular.get()
+            # cpf = entrada_cpf.get()
+            # rua  = entrada_rua.get()
+            # numerocasa = entrada_numerocasa.get()
+            # bairro = entrada_bairro.get()
+            # cidade = entrada_cidade.get()
+            # saldo = entrada_saldo.get()
+            # numero = entrada_numero.get()
+            # tipo = entrada_tipoconta.get()
 
             if titular == "" or cpf == "" or numero == "" or saldo == "" or  rua == "" or bairro == "" or cidade == "" or numerocasa == "" or tipo =="" :
                 messagebox.showerror("Erro", "Preencha todos os campos.")
@@ -337,19 +368,19 @@ class BancoApp:
                 nova_conta = ContaBancaria(cliente, numero, saldo)
                 self.contas.append(nova_conta)
             if tipo == "Corrente":
-                nova_conta = ContaBancaria(cliente, numero, saldo)
+                nova_conta = ContaCorrente(cliente, numero, saldo,limite,tarifa_mensal)
                 self.contas.append(nova_conta)
             if tipo == "Poupança":
-                nova_conta = ContaBancaria(cliente, numero, saldo)
+                nova_conta = ContaPoupanca(cliente, numero, saldo,taxa_rendimento)
                 self.contas.append(nova_conta)
-            if tipo == "Salario":
-                nova_conta = ContaBancaria(cliente, numero, saldo)
+            if tipo == "Salário":
+                nova_conta = ContaSalario(cliente, numero, saldo,empresa,saques_realizados,limite_saques)
                 self.contas.append(nova_conta)
             
 
             messagebox.showinfo("Sucesso", "Conta criada com sucesso.")
 
-            janela_cadastro.destroy()
+            # janela_cadastro.destroy()
             self.atualizar_tela()
 
         btn_salvar = tk.Button(

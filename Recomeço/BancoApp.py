@@ -20,8 +20,8 @@ class BancoApp:
         self.janela.geometry("950x500")
 
         self.contas = [
-            ContaCorrente(cliente1, 1004, 200,1000,100),
-            ContaPoupanca(cliente2, 1003, 20,0.1),
+            ContaCorrente(cliente1, 1003, 200,1000,100),
+            ContaPoupanca(cliente2, 1004, 20,0.1),
             ContaBancaria(cliente2, 1005, 20),
             ContaSalario(cliente3, 1006, 2000,"SENAI",0,2)
         ]
@@ -121,9 +121,9 @@ class BancoApp:
 
             btn_dados = tk.Button(
                 frame,
-                text="Exibir Dados",
+                text="Dados do Cliente",
                 width=15,
-                command=lambda conta=conta: self.exibir_dados(conta)
+                command=lambda conta=conta: self.dados_cliente(conta)
             )
             # btn_dados.config(state="active")
             btn_dados.pack(pady=2)
@@ -226,8 +226,11 @@ class BancoApp:
 
         self.atualizar_tela()
 
-    def exibir_dados(self, conta):
-        messagebox.showinfo("Dados da Conta", conta.exibir_dados())
+    def dados_cliente(self, conta):
+        messagebox.showinfo(
+            "Dados do Cliente",
+                conta.get_cliente().exibir_dados()
+            )
 
     def render_juros(self, conta):
         if(conta.get_tipo_conta() == "Conta Poupança"):
@@ -251,7 +254,10 @@ class BancoApp:
 
             if valor is not None:
                 conta.receber_salario(valor)
-            messagebox.showwarning("Sucesso", " Salário efetuado.")
+                messagebox.showwarning("Sucesso", " Salário efetuado.")
+            else:
+                messagebox.showwarning("Erro", " Digite um Valor")
+                
         else:
             messagebox.showerror("Erro", "Conta não recebe Salário")
         self.atualizar_tela()
@@ -272,56 +278,127 @@ class BancoApp:
 
     def criar_conta(self):
         janela_cadastro = tk.Toplevel(self.janela)
-        janela_cadastro.title("Criar nova conta")
-        janela_cadastro.geometry("800x800")
-        janela_cadastro.resizable(False,False)
+        janela_cadastro.title("Criar Nova Conta")
+        janela_cadastro.geometry("450x650")
 
-        tk.Label(janela_cadastro, text="Titular:").pack(pady=5)
+        # ===== Dados do cliente =====
+        tk.Label(janela_cadastro, text="Titular:").pack()
         entrada_titular = tk.Entry(janela_cadastro)
         entrada_titular.pack()
 
-        tk.Label(janela_cadastro, text="CPF:").pack(pady=5)
+        tk.Label(janela_cadastro, text="CPF:").pack()
         entrada_cpf = tk.Entry(janela_cadastro)
         entrada_cpf.pack()
-        tk.Label(janela_cadastro, text="Tipo de Conta:").pack(pady=5)
-        entrada_tipoconta = tk.Entry(janela_cadastro)
-        entrada_tipoconta.pack()
-        tk.Label(janela_cadastro, text="Número da conta:").pack(pady=5)
-        entrada_numero = tk.Entry(janela_cadastro)
-        entrada_numero.pack()
 
-        tk.Label(janela_cadastro, text="Saldo inicial:").pack(pady=5)
-        entrada_saldo = tk.Entry(janela_cadastro)
-        entrada_saldo.pack()
-        tk.Label(janela_cadastro, text="Rua:").pack(pady=5)
+        tk.Label(janela_cadastro, text="Rua:").pack()
         entrada_rua = tk.Entry(janela_cadastro)
         entrada_rua.pack()
 
-        tk.Label(janela_cadastro, text="Número:").pack(pady=5)
-        entrada_numerocasa= tk.Entry(janela_cadastro)
-        entrada_numerocasa.pack()
-        tk.Label(janela_cadastro, text="Bairro:").pack(pady=5)
+        tk.Label(janela_cadastro, text="Número:").pack()
+        entrada_numero_casa = tk.Entry(janela_cadastro)
+        entrada_numero_casa.pack()
+
+        tk.Label(janela_cadastro, text="Bairro:").pack()
         entrada_bairro = tk.Entry(janela_cadastro)
         entrada_bairro.pack()
 
-        tk.Label(janela_cadastro, text="Cidade:").pack(pady=5)
+        tk.Label(janela_cadastro, text="Cidade:").pack()
         entrada_cidade = tk.Entry(janela_cadastro)
         entrada_cidade.pack()
-        tk.Label(janela_cadastro, text="Empresa:").pack(pady=5)
-        entrada_empresa = tk.Entry(janela_cadastro)
-        entrada_empresa.pack()
-        tk.Label(janela_cadastro, text="Taxa Rendimento:").pack(pady=5)
-        entrada_taxa = tk.Entry(janela_cadastro)
-        entrada_taxa.pack()
-        tk.Label(janela_cadastro, text="Limite de Saques:").pack(pady=5)
-        entrada_limite_saques = tk.Entry(janela_cadastro)
-        entrada_limite_saques.pack()
-        tk.Label(janela_cadastro, text="Saques Realizados:").pack(pady=5)
-        entrada_saques_realizados = tk.Entry(janela_cadastro)
-        entrada_saques_realizados.pack()
-        tk.Label(janela_cadastro, text="Cobrança da Tarifa:").pack(pady=5)
-        entrada_tarifa = tk.Entry(janela_cadastro)
+
+        tk.Label(janela_cadastro, text="Número da Conta:").pack()
+        entrada_numero = tk.Entry(janela_cadastro)
+        entrada_numero.pack()
+
+        tk.Label(janela_cadastro, text="Saldo Inicial:").pack()
+        entrada_saldo = tk.Entry(janela_cadastro)
+        entrada_saldo.pack()
+
+        # ===== Tipo da Conta =====
+        tk.Label(janela_cadastro, text="Tipo da Conta").pack(pady=5)
+
+        entrada_tipo_conta = tk.StringVar(value="Bancária")
+
+        # Frames dos campos específicos
+        frame_corrente = tk.Frame(janela_cadastro)
+        frame_poupanca = tk.Frame(janela_cadastro)
+        frame_salario = tk.Frame(janela_cadastro)
+        frame_tipo = tk.Frame(janela_cadastro)
+        frame_tipo.pack(pady=10)
+        def mostrar_campos():
+            frame_corrente.pack_forget()
+            frame_poupanca.pack_forget()
+            frame_salario.pack_forget()
+           
+            if entrada_tipo_conta.get() == "Corrente":
+                frame_corrente.pack(pady=5)
+
+            elif entrada_tipo_conta.get() == "Poupança":
+                frame_poupanca.pack(pady=5)
+
+            elif entrada_tipo_conta.get() == "Salário":
+                frame_salario.pack(pady=5)
+
+        tk.Radiobutton(
+            frame_tipo,
+            text="Bancária",
+            variable=entrada_tipo_conta,
+            value="Bancária",
+            command=mostrar_campos
+        ).pack(side="left", padx=10)
+
+        tk.Radiobutton(
+            frame_tipo,
+            text="Corrente",
+            variable=entrada_tipo_conta,
+            value="Corrente",
+            command=mostrar_campos
+        ).pack(side="left", padx=10)
+
+        tk.Radiobutton(
+            frame_tipo,
+            text="Poupança",
+            variable=entrada_tipo_conta,
+            value="Poupança",
+            command=mostrar_campos
+        ).pack(side="left", padx=10)
+
+        tk.Radiobutton(
+            frame_tipo,
+            text="Salário",
+            variable=entrada_tipo_conta,
+            value="Salário",
+            command=mostrar_campos
+        ).pack(side="left", padx=10)
+
+        # ===== Conta Corrente =====
+        tk.Label(frame_corrente, text="Limite:").pack()
+        entrada_limite = tk.Entry(frame_corrente)
+        entrada_limite.pack()
+
+        tk.Label(frame_corrente, text="Tarifa Mensal:").pack()
+        entrada_tarifa = tk.Entry(frame_corrente)
         entrada_tarifa.pack()
+
+        # ===== Conta Poupança =====
+        tk.Label(frame_poupanca, text="Taxa de Rendimento:").pack()
+        entrada_taxa = tk.Entry(frame_poupanca)
+        entrada_taxa.pack()
+
+        # ===== Conta Salário =====
+        tk.Label(frame_salario, text="Empresa:").pack()
+        entrada_empresa = tk.Entry(frame_salario)
+        entrada_empresa.pack()
+
+        tk.Label(frame_salario, text="Limite de Saques:").pack()
+        entrada_limite_saques = tk.Entry(frame_salario)
+        entrada_limite_saques.pack()
+
+        tk.Label(frame_salario, text="Saques Realizados:").pack()
+        entrada_saques_realizados = tk.Entry(frame_salario)
+        entrada_saques_realizados.pack()
+
+        mostrar_campos()
 
 
         
@@ -333,25 +410,26 @@ class BancoApp:
             numerocasa = 192
             bairro = "Bairro 7"
             cidade = "Cidade 2"
-            saldo = 2000
-            numero = 1008
-            tipo = "Poupança"
-            limite = 1000
-            tarifa_mensal = 50
+            saldo = entrada_saldo.get()
+            tipo = entrada_tipo_conta.get()
             empresa = "IFRN"
-            saques_realizados = 0
-            limite_saques = 3
-            taxa_rendimento = 0.1
+           
 
             # titular = entrada_titular.get()
             # cpf = entrada_cpf.get()
             # rua  = entrada_rua.get()
-            # numerocasa = entrada_numerocasa.get()
+            # numerocasa = entrada_numero_casa.get()
             # bairro = entrada_bairro.get()
             # cidade = entrada_cidade.get()
-            # saldo = entrada_saldo.get()
-            # numero = entrada_numero.get()
-            # tipo = entrada_tipoconta.get()
+            saldo = entrada_saldo.get()
+            numero = entrada_numero.get()
+            # tipo = entrada_tipo_conta.get()
+            limite = entrada_limite.get()
+            tarifa_mensal = entrada_tarifa.get()
+            # empresa = entrada_empresa.get()
+            saques_realizados = entrada_saques_realizados.get()
+            limite_saques = entrada_limite_saques.get()
+            taxa_rendimento = entrada_taxa.get()
 
             if titular == "" or cpf == "" or numero == "" or saldo == "" or  rua == "" or bairro == "" or cidade == "" or numerocasa == "" or tipo =="" :
                 messagebox.showerror("Erro", "Preencha todos os campos.")
@@ -365,19 +443,31 @@ class BancoApp:
                 return
             cliente = Cliente(titular,cpf,rua,numerocasa,bairro,cidade)
             if tipo == "Bancária":
+                saldo = float(entrada_saldo.get())
                 nova_conta = ContaBancaria(cliente, numero, saldo)
                 self.contas.append(nova_conta)
-            if tipo == "Corrente":
+            elif tipo == "Corrente":
+                saldo = float(entrada_saldo.get())
+                limite = float(entrada_limite.get())
+                tarifa_mensal = float(entrada_tarifa.get())
                 nova_conta = ContaCorrente(cliente, numero, saldo,limite,tarifa_mensal)
                 self.contas.append(nova_conta)
-            if tipo == "Poupança":
+            elif tipo == "Poupança":
+                saldo = float(entrada_saldo.get())
+                taxa_rendimento = float(entrada_taxa.get())
                 nova_conta = ContaPoupanca(cliente, numero, saldo,taxa_rendimento)
                 self.contas.append(nova_conta)
-            if tipo == "Salário":
+            elif tipo == "Salário":
+                saldo = float(entrada_saldo.get())
+                saques_realizados = int(entrada_saques_realizados.get())
+                limite_saques = int(entrada_limite_saques.get())
                 nova_conta = ContaSalario(cliente, numero, saldo,empresa,saques_realizados,limite_saques)
                 self.contas.append(nova_conta)
             
-
+            if(nova_conta.existe_conta_duplicada()):
+                messagebox.showerror("Erro","Existe Conta Duplicada")
+                messagebox.showinfo("Contas",self.contas[0].contas_duplicadas())
+                exit()
             messagebox.showinfo("Sucesso", "Conta criada com sucesso.")
 
             # janela_cadastro.destroy()

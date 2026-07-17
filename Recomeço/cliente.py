@@ -25,7 +25,7 @@ class Cliente:
     def buscar_conta(self,numero):
         for n in self.__contas:
             if n.get_numero() == numero:
-                return n
+                return f"{n.get_cliente().get_nome()} tem a conta {n.get_numero()}"
         return None
     def consultar_saldo_total(self):
         saldo_total = 0 

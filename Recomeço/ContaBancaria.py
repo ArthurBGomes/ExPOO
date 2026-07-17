@@ -26,6 +26,9 @@ class ContaBancaria:
 
     def get_saldo(self):
         return self.__saldo
+    def set_saldo(self,valor):
+        self.__saldo = valor 
+        
     
     def get_tipo_conta(self):
         return "Conta Bancária"

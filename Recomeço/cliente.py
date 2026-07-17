@@ -18,7 +18,23 @@ class Cliente:
                 f"CPF: {self.__cpf}\n"
                 f"{self.__endereco.exibir_dados()}")
     def adicionar_conta(self,conta):
-        self.__contas.append(conta)
+        self.__contas.append(conta) 
+    def possui_conta(self):
+        return len(self.__contas) > 0
+        
+    def buscar_conta(self,numero):
+        for n in self.__contas:
+            if n.get_numero() == numero:
+                return n
+        return None
+    def consultar_saldo_total(self):
+        saldo_total = 0 
+        for n in self.__contas:
+            saldo_total += n.get_saldo()
+        return saldo_total
+
+
+
 
     
     

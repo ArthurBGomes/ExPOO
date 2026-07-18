@@ -177,7 +177,7 @@ class BancoApp:
             if conta.depositar(valor):
                 messagebox.showinfo("Sucesso", "Depósito realizado.")
             else:
-                messagebox.showerror("Erro", "Valor inválido.")
+                messagebox.showerror("Erro", "=== Opções de Falha ===\n1- Valor Inválido\n2- Conta não disponibiliza depósito")
 
         self.atualizar_tela()
 
@@ -222,7 +222,7 @@ class BancoApp:
         if conta_origem.transferir(valor, conta_destino):
             messagebox.showinfo("Sucesso", "Transferência realizada.")
         else:
-            messagebox.showerror("Erro", "Saldo/Limite insuficiente ou valor inválido.")
+            messagebox.showerror("Erro", "=== Opções de Falha ===\n1- Valor Inválido\n2- Saldo/Limite Insuficiente\n3- Conta não disponibiliza transferência")
 
         self.atualizar_tela()
 
@@ -281,7 +281,6 @@ class BancoApp:
         janela_cadastro.title("Criar Nova Conta")
         janela_cadastro.geometry("450x650")
 
-        # ===== Dados do cliente =====
         tk.Label(janela_cadastro, text="Titular:").pack()
         entrada_titular = tk.Entry(janela_cadastro)
         entrada_titular.pack()
@@ -314,12 +313,10 @@ class BancoApp:
         entrada_saldo = tk.Entry(janela_cadastro)
         entrada_saldo.pack()
 
-        # ===== Tipo da Conta =====
         tk.Label(janela_cadastro, text="Tipo da Conta").pack(pady=5)
 
         entrada_tipo_conta = tk.StringVar(value="Bancária")
 
-        # Frames dos campos específicos
         frame_corrente = tk.Frame(janela_cadastro)
         frame_poupanca = tk.Frame(janela_cadastro)
         frame_salario = tk.Frame(janela_cadastro)
@@ -371,7 +368,6 @@ class BancoApp:
             command=mostrar_campos
         ).pack(side="left", padx=10)
 
-        # ===== Conta Corrente =====
         tk.Label(frame_corrente, text="Limite:").pack()
         entrada_limite = tk.Entry(frame_corrente)
         entrada_limite.pack()
@@ -380,12 +376,10 @@ class BancoApp:
         entrada_tarifa = tk.Entry(frame_corrente)
         entrada_tarifa.pack()
 
-        # ===== Conta Poupança =====
         tk.Label(frame_poupanca, text="Taxa de Rendimento:").pack()
         entrada_taxa = tk.Entry(frame_poupanca)
         entrada_taxa.pack()
 
-        # ===== Conta Salário =====
         tk.Label(frame_salario, text="Empresa:").pack()
         entrada_empresa = tk.Entry(frame_salario)
         entrada_empresa.pack()
@@ -404,29 +398,29 @@ class BancoApp:
         
 
         def salvar_conta():
-            titular = "Lennedy"
-            cpf = "123-654-321-21"
-            rua  = "Rua 4"
-            numerocasa = 192
-            bairro = "Bairro 7"
-            cidade = "Cidade 2"
-            saldo = entrada_saldo.get()
-            tipo = entrada_tipo_conta.get()
-            empresa = "IFRN"
+            # titular = "Lennedy"
+            # cpf = "123-654-321-21"
+            # rua  = "Rua 4"
+            # numerocasa = 192
+            # bairro = "Bairro 7"
+            # cidade = "Cidade 2"
+            # saldo = entrada_saldo.get()
+            # tipo = entrada_tipo_conta.get()
+            # empresa = "IFRN"
            
 
-            # titular = entrada_titular.get()
-            # cpf = entrada_cpf.get()
-            # rua  = entrada_rua.get()
-            # numerocasa = entrada_numero_casa.get()
-            # bairro = entrada_bairro.get()
-            # cidade = entrada_cidade.get()
+            titular = entrada_titular.get()
+            cpf = entrada_cpf.get()
+            rua  = entrada_rua.get()
+            numerocasa = entrada_numero_casa.get()
+            bairro = entrada_bairro.get()
+            cidade = entrada_cidade.get()
             saldo = entrada_saldo.get()
             numero = entrada_numero.get()
-            # tipo = entrada_tipo_conta.get()
+            tipo = entrada_tipo_conta.get()
             limite = entrada_limite.get()
             tarifa_mensal = entrada_tarifa.get()
-            # empresa = entrada_empresa.get()
+            empresa = entrada_empresa.get()
             saques_realizados = entrada_saques_realizados.get()
             limite_saques = entrada_limite_saques.get()
             taxa_rendimento = entrada_taxa.get()

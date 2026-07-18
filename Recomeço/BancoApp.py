@@ -394,21 +394,7 @@ class BancoApp:
 
         mostrar_campos()
 
-
-        
-
         def salvar_conta():
-            # titular = "Lennedy"
-            # cpf = "123-654-321-21"
-            # rua  = "Rua 4"
-            # numerocasa = 192
-            # bairro = "Bairro 7"
-            # cidade = "Cidade 2"
-            # saldo = entrada_saldo.get()
-            # tipo = entrada_tipo_conta.get()
-            # empresa = "IFRN"
-           
-
             titular = entrada_titular.get()
             cpf = entrada_cpf.get()
             rua  = entrada_rua.get()
@@ -418,14 +404,8 @@ class BancoApp:
             saldo = entrada_saldo.get()
             numero = entrada_numero.get()
             tipo = entrada_tipo_conta.get()
-            limite = entrada_limite.get()
-            tarifa_mensal = entrada_tarifa.get()
-            empresa = entrada_empresa.get()
-            saques_realizados = entrada_saques_realizados.get()
-            limite_saques = entrada_limite_saques.get()
-            taxa_rendimento = entrada_taxa.get()
 
-            if titular == "" or cpf == "" or numero == "" or saldo == "" or  rua == "" or bairro == "" or cidade == "" or numerocasa == "" or tipo =="" :
+            if titular == "" or cpf == "" or numero == "" or saldo == "" or rua == "" or bairro == "" or cidade == "" or numerocasa == "" or tipo == "":
                 messagebox.showerror("Erro", "Preencha todos os campos.")
                 return
 
@@ -435,37 +415,54 @@ class BancoApp:
             except ValueError:
                 messagebox.showerror("Erro", "Número da conta e saldo devem ser valores numéricos.")
                 return
-            cliente = Cliente(titular,cpf,rua,numerocasa,bairro,cidade)
-            if tipo == "Bancária":
-                saldo = float(entrada_saldo.get())
-                nova_conta = ContaBancaria(cliente, numero, saldo)
-                self.contas.append(nova_conta)
-            elif tipo == "Corrente":
-                saldo = float(entrada_saldo.get())
-                limite = float(entrada_limite.get())
-                tarifa_mensal = float(entrada_tarifa.get())
-                nova_conta = ContaCorrente(cliente, numero, saldo,limite,tarifa_mensal)
-                self.contas.append(nova_conta)
-            elif tipo == "Poupança":
-                saldo = float(entrada_saldo.get())
-                taxa_rendimento = float(entrada_taxa.get())
-                nova_conta = ContaPoupanca(cliente, numero, saldo,taxa_rendimento)
-                self.contas.append(nova_conta)
-            elif tipo == "Salário":
-                saldo = float(entrada_saldo.get())
-                saques_realizados = int(entrada_saques_realizados.get())
-                limite_saques = int(entrada_limite_saques.get())
-                nova_conta = ContaSalario(cliente, numero, saldo,empresa,saques_realizados,limite_saques)
-                self.contas.append(nova_conta)
-            
-            if(nova_conta.existe_conta_duplicada()):
-                messagebox.showerror("Erro","Existe Conta Duplicada")
-                messagebox.showinfo("Contas",self.contas[0].contas_duplicadas())
-                exit()
-            messagebox.showinfo("Sucesso", "Conta criada com sucesso.")
 
-            # janela_cadastro.destroy()
+            cliente = Cliente(titular, cpf, rua, numerocasa, bairro, cidade)
+
+            try:
+                if tipo == "Bancária":
+                    nova_conta = ContaBancaria(cliente, numero, saldo)
+
+                elif tipo == "Corrente":
+                    if entrada_limite.get() == "" or entrada_tarifa.get() == "":
+                        messagebox.showerror("Erro", "Preencha os campos Limite e Tarifa Mensal.")
+                        return
+                    limite = float(entrada_limite.get())
+                    tarifa_mensal = float(entrada_tarifa.get())
+                    nova_conta = ContaCorrente(cliente, numero, saldo, limite, tarifa_mensal)
+
+                elif tipo == "Poupança":
+                    if entrada_taxa.get() == "":
+                        messagebox.showerror("Erro", "Preencha a Taxa de Rendimento.")
+                        return
+                    taxa_rendimento = float(entrada_taxa.get())
+                    nova_conta = ContaPoupanca(cliente, numero, saldo, taxa_rendimento)
+
+                elif tipo == "Salário":
+                    if entrada_empresa.get() == "" or entrada_saques_realizados.get() == "" or entrada_limite_saques.get() == "":
+                        messagebox.showerror("Erro", "Preencha os campos Empresa, Saques Realizados e Limite de Saques.")
+                        return
+                    empresa = entrada_empresa.get()
+                    saques_realizados = int(entrada_saques_realizados.get())
+                    limite_saques = int(entrada_limite_saques.get())
+                    nova_conta = ContaSalario(cliente, numero, saldo, empresa, saques_realizados, limite_saques)
+
+            except ValueError:
+                messagebox.showerror("Erro", "Verifique os campos específicos do tipo de conta: devem ser numéricos.")
+                return
+
+            self.contas.append(nova_conta)
+
+            if nova_conta.existe_conta_duplicada():
+                messagebox.showerror("Erro", "Existe Conta Duplicada")
+                messagebox.showinfo("Contas", self.contas[0].contas_duplicadas())
+                exit()
+
+            messagebox.showinfo("Sucesso", "Conta criada com sucesso.")
             self.atualizar_tela()
+
+        
+
+        
 
         btn_salvar = tk.Button(
             janela_cadastro,

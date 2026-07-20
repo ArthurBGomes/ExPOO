@@ -12,7 +12,7 @@ class ContaCorrente(ContaBancaria):
         else:
             return False
     def cobrar_taxa(self) -> None:
-        self.sacar(self.__tarifa_mensal)
+        return self.sacar(self.__tarifa_mensal) #colocar o return aqui
     def get_tipo_conta(self):
         return "Conta Corrente"
     def exibir_dados(self) -> str:

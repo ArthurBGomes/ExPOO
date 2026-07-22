@@ -1,4 +1,4 @@
-from ContaBancaria import ContaBancaria
+from Recomeço.ContaBancária import ContaBancaria
 
 class ContaSalario(ContaBancaria):
     def __init__(self, cliente, numero, saldo,empresa,saques_realizados,limite_saques):

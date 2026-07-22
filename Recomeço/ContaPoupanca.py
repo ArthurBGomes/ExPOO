@@ -1,4 +1,4 @@
-from ContaBancaria import ContaBancaria
+from Recomeço.ContaBancária import ContaBancaria
 
 class ContaPoupanca(ContaBancaria):
     def __init__(self, cliente, numero, saldo,taxa_rendimento):
@@ -9,7 +9,7 @@ class ContaPoupanca(ContaBancaria):
     def get_tipo_conta(self):
         return 'Conta Poupança'
     def render_juros(self):
-        self._ContaBancaria__saldo += self.__taxa_rendimento * self._ContaBancaria__saldo
+        self.set_saldo(self.get_saldo()+self.__taxa_rendimento * self.get_saldo())
         return None
     def exibir_dados(self):
          return f"{super().exibir_dados()}\nTaxa:{self.__taxa_rendimento}"

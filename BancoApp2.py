@@ -1,11 +1,13 @@
-from cliente import Cliente
-from Recomeço.ContaBancária import ContaBancaria
-from ContaCorrente import ContaCorrente
-from ContaPoupanca import ContaPoupanca
 import tkinter as tk
 from tkinter import messagebox, simpledialog
 
-
+from Recomeço.ContaBancaria import (
+    Cliente,
+    Endereco,
+    ContaCorrente,
+    ContaPoupanca,
+    ContaInvestimento,
+)
 
 
 class BancoApp:
@@ -14,13 +16,17 @@ class BancoApp:
         self.janela.title("Sistema Bancário - POO em Python")
         self.janela.geometry("1100x700")
 
-        cliente1 = Cliente("João", "111.101.011-01","Nevaldo", "10", "Ceará-Mirim", "Planalto")
+        endereco1 = Endereco("Nevaldo", "10", "Ceará-Mirim", "Planalto")
+        cliente1 = Cliente("João", "111.101.011-01", endereco1)
 
-        cliente2 = Cliente("Marcos", "222.202.022-02","Nevaldo", "10", "Ceará-Mirim", "Massaranduba")
+        endereco2 = Endereco("Nevaldo", "10", "Ceará-Mirim", "Massaranduba")
+        cliente2 = Cliente("Marcos", "222.202.022-02", endereco2)
 
-        cliente3 = Cliente("Samuel", "333.303.033-03","Nevaldo", "10", "Ceará-Mirim", "Novo Horizonte")
+        endereco3 = Endereco("Nevaldo", "10", "Ceará-Mirim", "Novo Horizonte")
+        cliente3 = Cliente("Samuel", "333.303.033-03", endereco3)
 
-        cliente4 = Cliente("Dhimy", "555.505.055-05","Nevaldo", "10", "Natal", "Aurora")
+        endereco4 = Endereco("Nevaldo", "10", "Natal", "Aurora")
+        cliente4 = Cliente("Dhimy", "555.505.055-05", endereco4)
 
         # Lista utilizada para exibir os clientes na interface.
         self.clientes = [
@@ -33,7 +39,7 @@ class BancoApp:
         self.contas = [
             ContaCorrente(cliente1, 1001, 500, 500, 10),
             ContaPoupanca(cliente2, 1002, 1000, 10),
-            ContaPoupanca(cliente1, 1003, 300, 2),
+            ContaInvestimento(cliente1, 1003, 300, 2, 1),
             ContaCorrente(cliente4, 1004, 20, 500, 10),
         ]
 
@@ -123,7 +129,7 @@ class BancoApp:
 
             tk.Label(
                 frame,
-                text=conta.get_cliente().get_nome(),
+                text=conta.get_titular(),
                 font=("Arial", 14, "bold"),
             ).pack()
 
@@ -184,7 +190,7 @@ class BancoApp:
                 frame,
                 text="Cobrar Tarifa",
                 width=17,
-                command=lambda c=conta: self.cobrar_taxa(c),
+                command=lambda c=conta: self.cobrar_tarifa(c),
             ).pack(pady=2)
 
             pode_render = tipo_conta in (
@@ -201,16 +207,12 @@ class BancoApp:
                 command=lambda c=conta: self.render_conta(c),
             ).pack(pady=2)
 
-    def exibir_quantidade_contas(self, cliente): # adicionar essa lógica pra fazer funcionar
-        quantidade = 0
-
-        for conta in self.contas:
-            if conta.get_cliente().get_cpf() == cliente.get_cpf():
-                quantidade += 1
+    def exibir_quantidade_contas(self, cliente):
+        quantidade = cliente.quantidade_contas()
 
         messagebox.showinfo(
             "Quantidade de contas",
-            f"{cliente.get_nome()} possui {quantidade} conta(s)."
+            f"O cliente {cliente.get_nome()} possui {quantidade} conta(s).",
         )
 
     def exibir_saldo_total(self, cliente):
@@ -427,7 +429,7 @@ class BancoApp:
     def exibir_dados(self, conta):
         messagebox.showinfo("Dados da Conta", conta.exibir_dados())
 
-    def cobrar_taxa(self, conta):
+    def cobrar_tarifa(self, conta):
         if conta.get_tipo_conta() != "Conta Corrente":
             messagebox.showwarning(
                 "Operação indisponível",
@@ -435,7 +437,7 @@ class BancoApp:
             )
             return
 
-        if conta.cobrar_taxa():
+        if conta.cobrar_tarifa():
             messagebox.showinfo("Sucesso", "Tarifa cobrada.")
         else:
             messagebox.showerror(

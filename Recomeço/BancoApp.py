@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
-from ContaBancaria import ContaBancaria
+from Recomeço.ContaBancária import ContaBancaria
 from cliente import Cliente
 from endereco import Endereco
 from ContaPoupanca import ContaPoupanca
@@ -8,9 +8,14 @@ from ContaCorrente import ContaCorrente
 from ContaSalario import ContaSalario
 
 
-cliente2 = Cliente("Giovanna","984.654.321","Rua 2",123,"Bairro 2","Cidade 1")
-cliente1 = Cliente("Arthur","123.456.789","Rua 1",196,"Bairro 2","Cidade 1")
-cliente3 = Cliente("George","987.654.321","Rua 2",123,"Bairro 2","Cidade 1")
+endereco1 = Endereco("Nevaldo", "10", "Ceará-Mirim", "Planalto")
+cliente1 = Cliente("João", "111.101.011-01", endereco1)
+endereco2 = Endereco("Nevaldo", "10", "Ceará-Mirim", "Massaranduba")
+cliente2 = Cliente("Marcos", "222.202.022-02", endereco2)
+endereco3 = Endereco("Nevaldo", "10", "Ceará-Mirim", "Novo Horizonte")
+cliente3 = Cliente("Samuel", "333.303.033-03", endereco3)
+endereco4 = Endereco("Nevaldo", "10", "Natal", "Aurora")
+cliente4 = Cliente("Dhimy", "555.505.055-05", endereco4)
 
 
 class BancoApp:
@@ -20,7 +25,7 @@ class BancoApp:
         self.janela.geometry("950x500")
 
         self.contas = [
-            ContaCorrente(cliente1, 1003, 200,1000,100),
+            ContaCorrente(cliente1, 1003, 200,1000,100,500,"Arthur"),
             ContaPoupanca(cliente2, 1004, 20,0.1),
             ContaBancaria(cliente2, 1005, 20),
             ContaSalario(cliente3, 1006, 2000,"SENAI",0,2)

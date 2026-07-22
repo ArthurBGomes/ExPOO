@@ -1,4 +1,4 @@
-from ContaBancaria import ContaBancaria
+from Recomeço.ContaBancária import ContaBancaria
 from rich import print,inspect
 class ContaUniversitaria(ContaBancaria):
     def __init__(self, cliente, numero, saldo):
